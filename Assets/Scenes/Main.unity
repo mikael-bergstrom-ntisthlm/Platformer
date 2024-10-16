@@ -342,10 +342,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 1700
-  groundChecker: {fileID: 0}
+  groundChecker: {fileID: 1167803285}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!61 &680380463
 BoxCollider2D:
   m_ObjectHideFlags: 0
