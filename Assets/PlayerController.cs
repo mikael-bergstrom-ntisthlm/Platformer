@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
 
   bool mayJump = true;
 
+  [SerializeField]
+  Transform groundChecker;
+
+  [SerializeField]
+  LayerMask groundLayer;
+
   void Update()
   {
     if (Input.GetAxisRaw("Jump") > 0 && mayJump == true)
@@ -18,5 +24,23 @@ public class PlayerController : MonoBehaviour
       mayJump = false;
     }
 
+    if (Input.GetAxisRaw("Jump") == 0)
+    {
+      mayJump = true;
+    }
+
+    print(IsGrounded());
+  }
+
+  private bool IsGrounded()
+  {
+    if (Physics2D.OverlapCircle(groundChecker.position, .2f, groundLayer))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 }
