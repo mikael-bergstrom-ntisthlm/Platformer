@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,11 +13,28 @@ public class PlayerController : MonoBehaviour
   [SerializeField]
   LayerMask groundLayer;
 
+  [SerializeField]
+  float moveSpeed = 5;
+
   void Update()
   {
-    if (Input.GetAxisRaw("Jump") > 0 && mayJump == true)
+    float xMove = Input.GetAxisRaw("Horizontal");
+
+    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+    // Vector2 vel = rb.velocity;
+    // vel.x = xMove * moveSpeed;
+    // rb.velocity = vel;
+
+    rb.velocity = new Vector2(
+      xMove * moveSpeed,
+      rb.velocity.y
+    );
+
+
+
+    if (Input.GetAxisRaw("Jump") > 0 && mayJump == true && IsGrounded())
     {
-      Rigidbody2D rb = GetComponent<Rigidbody2D>();
       rb.AddForce(Vector2.up * jumpForce);
       mayJump = false;
     }
@@ -29,7 +44,15 @@ public class PlayerController : MonoBehaviour
       mayJump = true;
     }
 
-    print(IsGrounded());
+    if (rb.velocity.x > 0)
+    {
+      GetComponent<SpriteRenderer>().flipX = false;
+    }
+
+    if (rb.velocity.x < 0)
+    {
+      GetComponent<SpriteRenderer>().flipX = true;
+    }
   }
 
   private bool IsGrounded()
